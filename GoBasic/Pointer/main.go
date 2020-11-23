@@ -37,8 +37,8 @@ func main() {
 	fmt.Println(&a5)
 	fmt.Println(&*a5)
 
-	var a6 *int //没有开辟内存空间
-	*a6 = 123
-	fmt.Println(*a6)
+	//var a6 *int //没有开辟内存空间
+	//*a6 = 123
+	//fmt.Println(*a6)
 
 }
