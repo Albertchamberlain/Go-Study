@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"math"
 	"math/rand"
+	"sort"
 	"time"
 )
 
@@ -51,5 +52,29 @@ func main() {
 	fmt.Println(math.Pow(3, 2)) //输出:输出9
 	//四舍五入
 	fmt.Println(math.Round(i)) //输出:12
+
+	num1 := []int{1, 7, 5, 2, 6}
+	sort.Ints(num1)
+
+	fmt.Println(num1)
+
+	sort.Sort(sort.Reverse(sort.IntSlice(num1))) //降序
+	fmt.Println(num1)
+
+	f := []float64{1.5, 7.2, 5.8, 2.3, 6.9}
+	sort.Float64s(f) //升序
+	fmt.Println(f)
+	sort.Sort(sort.Reverse(sort.Float64Slice(f))) //降序
+	fmt.Println(f)
+
+	s12 := []string{"算", "法是灵魂", "a", "d", "程序", "的", "灵魂a"}
+	sort.Sort(sort.StringSlice(s12)) //升序
+
+	fmt.Println(sort.StringSlice(s12))
+	fmt.Println(s12)
+	//查找内容的索引,如果不存在,返回内容应该在升序排序切片的哪个位置插入
+	fmt.Println(sort.SearchStrings(s12, "没错"))
+	sort.Sort(sort.Reverse(sort.StringSlice(s12)))
+	fmt.Println(s12)
 
 }
