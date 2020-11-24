@@ -77,4 +77,37 @@ func main() {
 	sort.Sort(sort.Reverse(sort.StringSlice(s12)))
 	fmt.Println(s12)
 
+	res := test1()
+	fmt.Println(res()) //输出2
+	fmt.Println(res()) //输出3
+	fmt.Println(res()) //输出4
+
+	f1 := test2()
+	fmt.Println("f的地址", f1) //输出匿名函数地址
+	fmt.Println("f:", f1()) //调用匿名函数输出2
+	fmt.Println("f:", f1()) //调用匿名函数输出3
+	k := test1()
+	fmt.Println("k的地址", k)  //输出匿名函数地址,与f相等
+	fmt.Println("k:", k())  //调用匿名函数输出2
+	fmt.Println("f:", f1()) //输出:4
+	fmt.Println("k:", k())  //输出:3
+
+}
+
+func test1() func() int {
+	i := 1
+	return func() int {
+		i = i + 1
+		return i
+	}
+}
+
+func test2() func() int {
+	i := 1
+	return func() int {
+		i++
+		// 每调用一次test1()输出的地址不一样
+		fmt.Println("i的地址:", &i)
+		return i
+	}
 }
