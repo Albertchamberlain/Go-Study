@@ -17,7 +17,8 @@ func main() {
 
 	b := make([]byte, 1024)
 	n, _ := conn.Read(b)
-	fmt.Println("get data", string(b[:n]))
 
+	fmt.Println("get data", string(b[:n]))
+	conn.Write(append([]byte("server"), b[:n]...))
 	conn.Close()
 }
