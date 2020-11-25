@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"math/rand"
+	"strconv"
 	"sync"
 	"time"
 )
@@ -37,6 +38,24 @@ func sellTicker(i int) {
 }
 
 func main() {
+
+	var rwm sync.RWMutex
+	m := make(map[string]string)
+	var wg sync.WaitGroup
+	wg.Add(10)
+	for i := 0; i < 10; i++ {
+		go func(j int) {
+			//没有锁在map时可能出现问题
+			rwm.Lock()
+			m["key"+strconv.Itoa(j)] = "value" + strconv.Itoa(j)
+			fmt.Println(m)
+			rwm.Unlock()
+			wg.Done()
+		}(i)
+	}
+	wg.Wait()
+	fmt.Println("程序结束")
+
 	//设置随机数种子
 	rand.Seed(time.Now().UnixNano())
 	//计算器的起始值和票数相同

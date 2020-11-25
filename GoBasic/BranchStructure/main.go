@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"runtime"
+)
 
 func main() {
 	score := 65
@@ -100,25 +103,53 @@ func main() {
 	}
 	fmt.Println("程序结束")
 
-	fmt.Println("执行程序")
-	i := 6
-	if i == 6 {
-		goto Loop
-	}
-	fmt.Println("if下面输出")
-Loop:
-	fmt.Println("loop")
+	//	fmt.Println("执行程序")
+	//	i := 6
+	//	if i == 6 {
+	//		goto Loop
+	//	}
+	//	fmt.Println("if下面输出")
+	//Loop:
+	//	fmt.Println("loop")
+	//
+	//	fmt.Println("执行程序")
+	//	i2 := 6
+	//	if i2 == 6 {
+	//		goto Loop2
+	//		goto Loop1
+	//	}
+	//	fmt.Println("if下面输出")
+	//Loop2:
+	//	fmt.Println("loop")
+	//Loop1: //报错:label Loop1 defined and not used
+	//	fmt.Println("Loop1")
 
-	fmt.Println("执行程序")
-	i2 := 6
-	if i2 == 6 {
-		goto Loop2
-		goto Loop1
+	runtime.GOMAXPROCS(1)
+	ch1 := make(chan int, 1)
+	ch2 := make(chan string, 1)
+	ch1 <- 1
+	ch2 <- "hello"
+	select {
+	case value := <-ch1:
+		fmt.Println(value)
+	case value := <-ch2:
+		fmt.Println(value)
 	}
-	fmt.Println("if下面输出")
-Loop2:
-	fmt.Println("loop")
-Loop1: //报错:label Loop1 defined and not used
-	fmt.Println("Loop1")
 
+	ch := make(chan int)
+	for i := 1; i <= 5; i++ {
+		go func(arg int) {
+			ch <- arg
+		}(i)
+	}
+	//如果是一直接受消息,应该是死循环for{},下面代码中是明确知道消息个数
+	for i := 1; i <= 5; i++ {
+		select {
+		case c := <-ch:
+			fmt.Println("取出数据", c)
+		default:
+			//没有default会出现死锁
+		}
+	}
+	fmt.Println("程序执行结束")
 }
