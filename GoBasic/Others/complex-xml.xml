@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<peoples version="0.9">
+    <people id="666">
+        <name>xiaopang</name>
+        <address>广东深圳</address>
+    </people>
+    <people id="555">
+        <name>小明</name>
+        <address>广东东莞</address>
+    </people>
+</peoples>
