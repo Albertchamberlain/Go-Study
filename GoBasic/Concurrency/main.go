@@ -2,13 +2,53 @@ package main
 
 import (
 	"fmt"
+	"math/rand"
 	"sync"
 	"time"
 )
 
 var wg sync.WaitGroup
+var (
+	//票数
+	num = 100
+	wgg sync.WaitGroup
+	//互斥锁
+	mu sync.Mutex
+)
+
+func sellTicker(i int) {
+	defer wg.Done()
+	for {
+		//加锁,多个goroutine互斥
+		mu.Lock()
+		if num >= 1 {
+			fmt.Println("第", i, "个窗口卖了", num)
+			num = num - 1
+		}
+		//解锁
+		mu.Unlock()
+
+		if num <= 0 {
+			break
+		}
+		//添加休眠,防止结果可能出现在一个goroutine中
+		time.Sleep(time.Duration(rand.Int63n(1000) * 1e6))
+	}
+}
 
 func main() {
+	//设置随机数种子
+	rand.Seed(time.Now().UnixNano())
+	//计算器的起始值和票数相同
+	wgg.Add(4)
+	go sellTicker(1)
+	go sellTicker(2)
+	go sellTicker(3)
+	go sellTicker(4)
+	wgg.Wait()
+
+	fmt.Println("所有票卖完")
+
 	fmt.Println("1")
 	//单位是纳秒,表示阻塞多长时间
 	//e9表示10的9次方
