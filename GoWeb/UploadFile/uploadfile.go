@@ -8,7 +8,7 @@ import (
 )
 
 func welcome13(w http.ResponseWriter, r *http.Request) {
-	t, _ := template.ParseFiles("GoWeb/uploadfile/view/index.html")
+	t, _ := template.ParseFiles("GoWeb/UploadFile/view/index.html")
 	_ = t.Execute(w, nil)
 }
 
@@ -18,7 +18,7 @@ func upload(w http.ResponseWriter, r *http.Request) {
 	b, _ := ioutil.ReadAll(file)
 
 	_ = ioutil.WriteFile("D:/"+fileName+fileHeader.Filename[strings.LastIndex(fileHeader.Filename, "."):], b, 0777)
-	t, _ := template.ParseFiles("GoWeb/uploadfile/view/success.html")
+	t, _ := template.ParseFiles("GoWeb/UploadFile/view/success.html")
 	_ = t.Execute(w, nil)
 }
 

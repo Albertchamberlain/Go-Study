@@ -8,7 +8,7 @@ import (
 )
 
 func welcome(w http.ResponseWriter, r *http.Request) {
-	t, _ := template.ParseFiles("GoWeb/downloadfile/view/index.html")
+	t, _ := template.ParseFiles("GoWeb/DownloadFile/view/index.html")
 	_ = t.Execute(w, nil)
 }
 func download(w http.ResponseWriter, r *http.Request) {

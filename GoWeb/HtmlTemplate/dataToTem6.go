@@ -14,8 +14,8 @@ func MyFormat(s string) string {
 
 func html(res http.ResponseWriter, req *http.Request) {
 	funcMap := template.FuncMap{"mf": MyFormat}
-	t := template.New("GoWeb/htmltemplate/view/index6.html").Funcs(funcMap)
-	t, _ = t.ParseFiles("GoWeb/htmltemplate/view/index6.html")
+	t := template.New("GoWeb/HtmlTemplate/view/index6.html").Funcs(funcMap)
+	t, _ = t.ParseFiles("GoWeb/HtmlTemplate/view/index6.html")
 	s := "2020-11-26 11:02:03"
 	_ = t.Execute(res, s)
 }

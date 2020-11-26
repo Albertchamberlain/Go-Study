@@ -12,7 +12,7 @@ type User struct {
 }
 
 func welcome4(w http.ResponseWriter, r *http.Request) {
-	t, _ := template.ParseFiles("GoWeb/htmltemplate/view/index3.html")
+	t, _ := template.ParseFiles("GoWeb/HtmlTemplate/view/index3.html")
 	_ = t.Execute(w, User{"xiaopang", 20}) //此处传递数据
 }
 

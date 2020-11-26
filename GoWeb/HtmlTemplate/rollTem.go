@@ -7,7 +7,7 @@ import (
 
 func welcome12(w http.ResponseWriter, r *http.Request) {
 
-	t, _ := template.ParseFiles("GoWeb/htmltemplate/view/layout.html", "GoWeb/htmltemplate/view/head.html", "GoWeb/htmltemplate/view/foot.html")
+	t, _ := template.ParseFiles("GoWeb/HtmlTemplate/view/layout.html", "GoWeb/HtmlTemplate/view/head.html", "GoWeb/HtmlTemplate/view/foot.html")
 
 	_ = t.ExecuteTemplate(w, "layout", nil)
 }

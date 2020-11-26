@@ -6,7 +6,7 @@ import (
 )
 
 func welcome2(w http.ResponseWriter, r *http.Request) {
-	t, _ := template.ParseFiles("GoWeb/htmltemplate/view/index.html")
+	t, _ := template.ParseFiles("GoWeb/HtmlTemplate/view/index.html")
 	_ = t.Execute(w, "xiaopang")
 }
 

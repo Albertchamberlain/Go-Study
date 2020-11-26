@@ -14,7 +14,7 @@ func main() {
 			b := make([]byte, 1024)
 			count, _ := conn.Read(b)
 			fmt.Println("服务器接收到的消息为:", string(b[:count]))
-			_, _ = conn.Write(append([]byte("server:"), b[:count]...))
+			_, _ = conn.Write(append([]byte("Server:"), b[:count]...))
 			_ = conn.Close()
 		}()
 	}

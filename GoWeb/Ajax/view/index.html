@@ -1,0 +1,40 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <title>Title</title>
+    <script type="text/javascript" src="/static/js/jquery-1.7.2.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $("button").click(function () {
+                $.post("getUser", function (data) {
+                    var result = "";
+                    for (var i = 0; i < data.length; i++) {
+                        result += "<tr>";
+                        result += "<td>";
+                        result += data[i].Name;
+                        result += "</td>";
+                        result += "<td>";
+                        result += data[i].Age;
+                        result += "</td>";
+                        result += "</tr>";
+                    }
+                    $("#t_tbody").html(result)
+                })
+            })
+        })
+    </script>
+</head>
+<body>
+<button>加载数据到表格</button>
+<table border="1">
+    <tr>
+        <th>姓名</th>
+        <th>年龄</th>
+    </tr>
+    <tbody id="t_tbody">
+
+    </tbody>
+</table>
+</body>
+</html>

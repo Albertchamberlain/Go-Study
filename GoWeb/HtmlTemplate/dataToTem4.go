@@ -12,7 +12,7 @@ type User2 struct {
 }
 
 func welcome5(w http.ResponseWriter, r *http.Request) {
-	t, _ := template.ParseFiles("GoWeb/htmltemplate/view/index4.html")
+	t, _ := template.ParseFiles("GoWeb/HtmlTemplate/view/index4.html")
 	m := make(map[string]interface{})
 	m["user"] = User2{"xiaopang", 20}
 	m["money"] = 10001

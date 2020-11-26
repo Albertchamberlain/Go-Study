@@ -6,7 +6,7 @@ import (
 )
 
 func test(rw http.ResponseWriter, r *http.Request) {
-	t, _ := template.ParseFiles("GoWeb/htmltemplate/view/ifelseaction.html")
+	t, _ := template.ParseFiles("GoWeb/HtmlTemplate/view/ifelseaction.html")
 	//第二个参数传递类型默认值:nil,"",0,false等都会导致if不成立
 	t.Execute(rw, "")
 }

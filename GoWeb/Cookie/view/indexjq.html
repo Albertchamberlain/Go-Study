@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="GoWeb/Cookie/static/js/jquery-1.7.2.js"></script>
+    <script src="GoWeb/Cookie/static/js/jquery.cookie.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $("button").click(function () {
+                var value = $.cookie("mykey")
+                alert(value)
+            })
+        })
+    </script>
+</head>
+<body>
+<a href="setCookie">产生Cookie</a>
+<button>获取cookie</button>
+</body>
+</html>

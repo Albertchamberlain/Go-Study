@@ -10,10 +10,10 @@ func main() {
 
 	conn, _ := net.DialTCP("tcp", nil, addr)
 
-	conn.Write([]byte("client send data"))
+	conn.Write([]byte("Client send data"))
 	b := make([]byte, 1024)
 	count, _ := conn.Read(b)
-	fmt.Println("data from server", b[:count])
+	fmt.Println("data from Server", b[:count])
 	conn.Close()
 
 }
