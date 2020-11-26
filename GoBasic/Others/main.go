@@ -14,12 +14,12 @@ func main() {
 	peogen := PeopleGen{Id: 123, Name: "xiaopang", Address: "广东深圳"}
 	b, _ := xml.MarshalIndent(peogen, "", "	")
 	b = append([]byte(xml.Header), b...)
-	ioutil.WriteFile("D:\\GoPro\\GoBasic\\Others\\okk.xml", b, 0666)
+	ioutil.WriteFile("D:\\ego\\GoBasic\\Others\\okk.xml", b, 0666)
 	fmt.Println("程序结束")
 
 	log.Println("打印日志信息")
 
-	f13, _ := os.OpenFile("D:\\GoPro\\GoBasic\\Others\\golog.log", os.O_APPEND|os.O_CREATE, 07777)
+	f13, _ := os.OpenFile("D:\\ego\\GoBasic\\Others\\golog.log", os.O_APPEND|os.O_CREATE, 07777)
 	defer f13.Close()
 	logger := log.New(f13, "[info]\t", log.Ltime)
 	logger.Println("输出日志信息")
