@@ -1,5 +1,3 @@
-# Ego
-
  :wave::wave::wave:
 
 
