@@ -1,3 +1,82 @@
+
+# 一. 概述
+
+* 讨论值传递和引用传递时,其实就是看值类型变量和引用类型变量作为函数参数时,修改`形参`是否会影响到`实参`
+* go语言只有值传递
+* 在Go语言中五个引用类型变量,其他都是值类型
+  * slice
+  * map
+  * channel
+  * interface
+  * func()
+* 引用类型作为参数时,称为`浅拷贝`,形参改变,实参数跟随变化.因为传递的是`地址`,`形参`和`实参`都指向同一块地址
+* 值类型作为参数时,称为`深拷贝`,形参改变,实参不变,因为传递的是值的副本,形参会新开辟一块空间,与实参指向不同
+* 如果希望值类型数据在修改形参时实参跟随变化,可以把参数设置为指针类型 (Go引用传递实现的方式)
+
+# 二.代码演示
+
+* 值类型作为参数代码演示
+
+```go
+package main
+
+import "fmt"
+
+func demo(i int, s string) {
+	i = 5
+	s = "改变"
+}
+
+func main() {
+	i := 1
+	s := "原值"
+	demo(i, s)
+	fmt.Println(i, s) //输出:1 原值
+}
+```
+
+* 引用传递代码示例
+
+```go
+package main
+
+import "fmt"
+
+func demo(arg []int) {
+   arg[len(arg)-1] = 110
+}
+
+func main() {
+   s := []int{1, 2, 3}
+   demo(s)
+   fmt.Println(s) //输出:[1 2 110]
+}
+```
+
+* 如果希望值类型实参跟随形参变化,可以把值类型指针作为参数
+
+```go
+package main
+
+import "fmt"
+
+//行参指针类型
+func demo(i *int, s string) {
+   //需要在变量前面带有*表示指针变量
+   *i = 5
+   s = "改变"
+}
+
+func main() {
+   i := 1
+   s := "原值"
+   //注意此处第一个参数是i的地址,前面&
+   //s保留为值类型
+   demo(&i, s)
+   fmt.Println(i, s) //输出:5 原值
+}
+```
+
 # 一. 函数
 
 ```
@@ -323,4 +402,64 @@ func a() func() int {
 		return 110
 	}
 }
+```
+* 闭包解决`局部变量`不能被外部访问
+* 是把`函数`当作`返回值`的一种应用
+
+
+
+* 总体思想为:**在函数内部定义局部变量,把另一个函数当作返回值,局部变量对于返回值函数就相当于全局变量,所以多次调用返回值函数局部变量的值跟随变化**
+
+```
+package main
+
+import "fmt"
+
+func main() {
+	//res其实就是test1返回值函数,和之前匿名函数变量一个道理
+	res := test1()
+	fmt.Println(res()) //输出2
+	fmt.Println(res()) //输出3
+	fmt.Println(res()) //输出4
+}
+
+//注意此处,返回值类型是func int
+func test1() func() int {
+	i := 1
+	return func() int {
+		i = i + 1
+		return i
+	}
+}
+```
+
+* 如果重新调用test1()会重新声明及赋值局部变量i
+
+```
+package main
+
+import "fmt"
+
+func main() {
+	f := test1()
+	fmt.Println("f的地址", f) //输出匿名函数地址
+	fmt.Println("f:", f()) //调用匿名函数输出2
+	fmt.Println("f:", f()) //调用匿名函数输出3
+	k := test1()
+	fmt.Println("k的地址", k) //输出匿名函数地址,与f相等
+	fmt.Println("k:", k()) //调用匿名函数输出2
+	fmt.Println("f:", f()) //输出:4
+	fmt.Println("k:", k()) //输出:3
+}
+
+func test1() func() int {
+	i := 1
+	return func() int {
+		i++
+		// 每调用一次test1()输出的地址不一样
+		fmt.Println("i的地址:", &i)
+		return i
+	}
+}
+
 ```

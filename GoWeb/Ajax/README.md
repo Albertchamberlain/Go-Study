@@ -38,3 +38,52 @@ Field int `json:",omitempty"`
 
 
 
+
+# Ajax访问返回json数据
+
+* 使用jQuery封装的$.post()进行ajax请求
+* HTML页面发送ajax请求,请求数据
+
+
+
+* 服务端返回json数据即可.
+
+```go
+package main
+
+import (
+	"net/http"
+	"html/template"
+	"encoding/json"
+	"fmt"
+)
+
+type User struct {
+	Name string
+	Age  int
+}
+
+func welcome(w http.ResponseWriter, r *http.Request) {
+	t, _ := template.ParseFiles("view/index.html")
+	t.Execute(w, nil)
+}
+func getUser(w http.ResponseWriter, r *http.Request) {
+	users := make([]User, 0)
+	users = append(users, User{"张三", 12})
+	users = append(users, User{"李四", 13})
+	users = append(users, User{"王五", 14})
+	w.Header().Set("Content-type", "application/json;charset=utf-8")
+	b, _ := json.Marshal(users)
+	fmt.Fprintln(w, string(b))
+}
+
+func main() {
+	server := http.Server{Addr: ":8090"}
+	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
+	http.HandleFunc("/", welcome)        //首页
+	http.HandleFunc("/getUser", getUser) //获取信息Handler
+	server.ListenAndServe()
+}
+
+```
+
